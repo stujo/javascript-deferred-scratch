@@ -1,0 +1,55 @@
+<html>
+<HEAD>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.css"/>
+    <style>
+        .container {
+            width: 90%;
+            margin: 0px auto;
+        }
+
+        #sentence {
+            margin: 1em;
+            padding: 1em;
+            border: 0.1em solid #eee;
+        }
+
+        #buttons {
+            padding: 1em;
+            text-align: center;
+        }
+    </style>
+</HEAD>
+<body>
+<div class="container">
+    <div id="buttons">
+        <button id="generate">Make It Up!</button>
+    </div>
+    <div id="sentence">&nbsp;</div>
+</div>
+<script src="stuferred.js"></script>
+<script src="ajax-wrapper.js"></script>
+<script>
+
+    var button = document.getElementById('generate');
+
+    button.addEventListener('click', function () {
+
+        var promise = AjaxWrapper.ajax('http://www.randomtext.me/api/gibberish/p-5/25-45');
+
+        promise.done(function (json) {
+            var data = JSON.parse(json);
+            var button = document.getElementById('sentence');
+            button.innerHTML = data.text_out;
+        });
+
+
+        promise.fail(function (error) {
+            console.log("ERROR");
+            console.log(error);
+        });
+
+    });
+
+</script>
+</body>
+</html>
